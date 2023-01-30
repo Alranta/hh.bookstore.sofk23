@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookstore</title>
+</head>
+<body>
+  	<h1>Welcome to Bookstore</h1>
+    <table>
+    <tr>
+    	<th>Titteli</th>
+    	<th>Kirjailija</th>
+    	<th>Julkaisuvuosi</th>
+    	<th>Isbn</th>
+    	<th>Hinta</th>
+    </tr>
+    <tr th:each="book : ${booklist}"> <!-- KÄYDÄÄN LISTASTA KAIKKI LÄPI -->
+    <td th:text="${book.title}" >Titteli</td>
+    <td th:text="${book.author}" >Kirjailija</td>   
+    <td th:text="${book.year}" >Vuosi</td>   
+    <td th:text="${book.isbn}" >Isbn</td>    
+    <td th:text="${book.price}" >Hinta</td> 
+      
+    </table>
+    
+</body>
+</html>
