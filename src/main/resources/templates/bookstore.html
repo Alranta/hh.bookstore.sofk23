@@ -16,13 +16,15 @@
     	<th>Julkaisuvuosi</th>
     	<th>Isbn</th>
     	<th>Hinta</th>
+    	<th>Kategoria</th>
     </tr>
     <tr th:each="book : ${books}"> <!-- KÄYDÄÄN LISTASTA KAIKKI LÄPI -->
     	<td th:text="${book.title}" >Titteli</td>
     	<td th:text="${book.author}" >Kirjailija</td>   
     	<td th:text="${book.releaseYear}" >Vuosi</td>   
     	<td th:text="${book.isbn}" >Isbn</td>    
-    	<td th:text="${book.price}" >Hinta</td> 
+    	<td th:text="${book.price}" >Hinta</td>
+    	<td th:text="${book.category.name}">Kategoria</td>
     	<td><a class ="btn btn-danger" th:href="@{/deletebook/{id}(id=${book.id})}">Delete</a></td>
     	<td><a class ="btn btn-success" th:href="@{/editbook/{id}(id=${book.id})}">Edit</a></td>
     </tr>  

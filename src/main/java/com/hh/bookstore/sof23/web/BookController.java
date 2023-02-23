@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.hh.bookstore.sof23.domain.Book;
 import com.hh.bookstore.sof23.domain.BookRepository;
+import com.hh.bookstore.sof23.domain.CategoryRepository;
 
 @Controller
 public class BookController {
@@ -23,6 +24,10 @@ public class BookController {
 // Autowired ANNOTAATIOLLA SAADAAN KÄYTTÖÖN BOOKREPOSITORY! 
 @Autowired 
 private BookRepository bookRepository;
+
+// OTETAAN MYÖS KÄYTTÖÖN KATEGORIAREPOSITORY
+@Autowired
+private CategoryRepository categoryRepository;
 	
 	@GetMapping("/bookstore")
 	
@@ -36,6 +41,8 @@ private BookRepository bookRepository;
 	@RequestMapping(value = "/newbook", method = RequestMethod.GET)
 	public String addNewBook(Model model) {
 		model.addAttribute("book", new Book());
+		// LISÄTÄÄN KATEGORIAREPOSITORY MODELIIN ETTÄ SITÄ VOIDAAN KÄYTTÄÄ!
+		model.addAttribute("categories", categoryRepository.findAll());
 		return "bookform";
 	}
 	
@@ -61,6 +68,8 @@ private BookRepository bookRepository;
 	@RequestMapping(value = "/editbook/{id}", method = RequestMethod.GET)
 	public String editBook(@PathVariable("id") Long bookId, Model model ) {
 		model.addAttribute("book", bookRepository.findById(bookId));
+		// SAMOIN LISÄTÄÄN TÄNNE ETTÄ MAPPING VOI KÄYTTÄÄ SITÄ
+		model.addAttribute("categories", categoryRepository.findAll());
 		return "editform";
 	}
 }

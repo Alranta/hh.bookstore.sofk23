@@ -9,11 +9,35 @@
 <body>
   	<h1>Add a new book:</h1>
     <form method="post" action="#" th:action="@{/savebook}" th:object = ${book} >
-    	<p>Titteli: <input type="text" th:field="${book.title}" /> </p>
-    	<p>Kirjailija: <input type="text" th:field="${book.author}" /> </p>
-    	<p>Julkaisuvuosi: <input type="text" th:field="${book.releaseYear}" /> </p>
-   		<p>Isbn: <input type="text" th:field="${book.isbn}" /> </p>
-    	<p>Hinta: <input type="text" th:field="${book.price}" /> </p>
+    
+    
+    		<label for="title">Titteli</label>
+			<input type="text" id="title" th:field="*{title}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+			
+		  	<label for="author">Kirjailija</label>
+			<input type="text" id="author" th:field="*{author}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+			
+		  	<label for="releaseyear">Julkaisuvuosi</label>
+			<input type="text" th:field="*{releaseYear}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+			
+			<label for="isbn">Isbn</label>
+			<input type="text" th:field="*{isbn}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+			
+			<label for="price">Hinta</label>
+			<input type="text" th:field="*{price}" />
+    		<div style="clear: both; display: block; height: 10px;"></div>
+    		
+    	<label for="categorylist">Kategoria</label>
+    	<select id="categorylist" th:field="*{category}" class = "form-control">
+    		<option th:each="category: ${categories}" th:value="${category.categoryid}" th:text = "${category.name}"></option>
+    	</select>
+    	<div style="clear: both; display: block; height: 10px;"></div>
+    	
+    	
     <input type="submit" value="Submit"/> <input type="reset" value="Reset">
     </form>
     
