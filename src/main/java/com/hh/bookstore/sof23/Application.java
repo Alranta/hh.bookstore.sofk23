@@ -12,6 +12,8 @@ import com.hh.bookstore.sof23.domain.Book;
 import com.hh.bookstore.sof23.domain.BookRepository;
 import com.hh.bookstore.sof23.domain.Category;
 import com.hh.bookstore.sof23.domain.CategoryRepository;
+import com.hh.bookstore.sof23.domain.User;
+import com.hh.bookstore.sof23.domain.UserRepository;
 
 @SpringBootApplication
 public class Application {
@@ -22,7 +24,7 @@ public class Application {
 
 	// CommandLineRunner ON TESTI ALUSTA H2-CONSOLEEN! 
 	@Bean
-	public CommandLineRunner demoDataToDatabase(BookRepository bookRepository, CategoryRepository categoryRepository) {
+	public CommandLineRunner demoDataToDatabase(BookRepository bookRepository, CategoryRepository categoryRepository, UserRepository userRepository) {
 		return (arg) -> {
 			Category category1 = new Category("Jännitys");
 			Category category2 = new Category("Romanssi");
@@ -46,6 +48,11 @@ public class Application {
 			for (Category category : categories) {
 				System.out.println(category.toString());
 			}
+			
+			User user1 = new User("user", "$2a$10$QloyikO59jTgqye/N0y1SueadKPrsGYi7yzgLPO2l02YTwGjaHF56", "USER");
+			User user2 = new User("admin", "$2a$10$dlJmBTG4iB35dWoSq7J2ieEbs4Q9RjcqdNn6rtn3k3VG0lAkFGCTO", "ADMIN");
+			userRepository.save(user1);
+			userRepository.save(user2);
 		};
 	}
 }

@@ -1,5 +1,7 @@
 package com.hh.bookstore.sof23.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,6 +31,7 @@ public class Book {
 	// TÄSSÄ VOI OLLA MONTA KIRJAA YHDESSÄ CATEGORIASSA!
 	@ManyToOne
 	//JoinColumn LIITTÄÄ TÄHÄN TAULUUN CATEGORIAN CATEGORYIDLLÄ
+	@JsonIgnore
 	@JoinColumn(name = "categoryid")
 	private Category category;
 
