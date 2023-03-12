@@ -1,22 +1,26 @@
 package com.hh.bookstore.sof23.web;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hh.bookstore.sof23.domain.Book;
 import com.hh.bookstore.sof23.domain.BookRepository;
 import com.hh.bookstore.sof23.domain.CategoryRepository;
 
+@CrossOrigin
 @Controller
 public class BookController {
 
@@ -36,6 +40,26 @@ private CategoryRepository categoryRepository;
 		model.addAttribute("books", bookRepository.findAll());
 		return "bookstore";
 	}
+	
+	// TÄMÄ ON REST ENDPOINT JOSTA NÄKEE JSON MUODOSSA KIRJAT!!!
+	// HUOMAA RESPONSEBODY
+	@GetMapping("/books")
+	public @ResponseBody List<Book> getBooks() {
+		return (List<Book>)bookRepository.findAll();
+	}
+	
+	// RAKENNETAAN MYÖS MISSÄ PATHVARIABLE JOTTA VOIDAAN VALITA KIRJA ID:N PERUSTEELLA NÄYTETTÄVÄKSI!
+	@GetMapping("/books/{id}")
+	public @ResponseBody Optional<Book> getOneBook(@PathVariable("id") Long bookId) {
+		return bookRepository.findById(bookId);
+	}
+	
+	// LUODAAN METODI POST:ILLE! ilman tätä et voi käyttää post ominaisuutta!
+	@PostMapping("/books")
+	public @ResponseBody Book addNewBook(@RequestBody Book book) {
+		return bookRepository.save(book);
+	}
+	
 	
 	// LUODAAN UUSI MAPPING UUDELLE KIRJALLE
 	@RequestMapping(value = "/newbook", method = RequestMethod.GET)
