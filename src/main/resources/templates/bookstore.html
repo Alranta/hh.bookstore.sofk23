@@ -37,7 +37,7 @@
     	<td th:text="${book.isbn}" >Isbn</td>    
     	<td th:text="${book.price}" >Hinta</td>
     	<td th:text="${book.category.name}">Kategoria</td>
-    	<td sec:authorize="hasRole('ADMIN')"><a class ="btn btn-danger" th:href="@{/deletebook/{id}(id=${book.id})}">Delete</a></td>
+    	<td sec:authorize="hasAuthority('ADMIN')"><a class ="btn btn-danger" th:href="@{/deletebook/{id}(id=${book.id})}">Delete</a></td>
     	<td><a class ="btn btn-success" th:href="@{/editbook/{id}(id=${book.id})}">Edit</a></td>
     </tr>  
     </table>
