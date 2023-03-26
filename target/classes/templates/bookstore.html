@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" /> 
+    <title>Bookstore</title>
+</head>
+<body>
+  	<h1>Welcome to Bookstore</h1>
+  	<div class="col-md-4">
+		<h3>Hello <span sec:authentication="name"></span>!</h3>
+	</div>
+	
+  	<div class="col-md-4" style="padding:20px 0">
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
+		</form>
+	</div>
+	
+    <table class="table table-striped">
+    <tr>
+    	<th>Titteli</th>
+    	<th>Kirjailija</th>
+    	<th>Julkaisuvuosi</th>
+    	<th>Isbn</th>
+    	<th>Hinta</th>
+    	<th>Kategoria</th>
+    	<th sec:authorize="hasRole('ADMIN')"> </th>
+    </tr>
+    <tr th:each="book : ${books}"> <!-- KÄYDÄÄN LISTASTA KAIKKI LÄPI -->
+    	<td th:text="${book.title}" >Titteli</td>
+    	<td th:text="${book.author}" >Kirjailija</td>   
+    	<td th:text="${book.releaseYear}" >Vuosi</td>   
+    	<td th:text="${book.isbn}" >Isbn</td>    
+    	<td th:text="${book.price}" >Hinta</td>
+    	<td th:text="${book.category.name}">Kategoria</td>
+    	<td sec:authorize="hasAuthority('ADMIN')"><a class ="btn btn-danger" th:href="@{/deletebook/{id}(id=${book.id})}">Delete</a></td>
+    	<td><a class ="btn btn-success" th:href="@{/editbook/{id}(id=${book.id})}">Edit</a></td>
+    </tr>  
+    </table>
+    <p><a class ="btn btn-success" href =/newbook>Lisää uusi kirja</a>
+    
+    
+</body>
+</html>
