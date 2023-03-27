@@ -1,26 +1,16 @@
-# Dockerfile
+#
+# Mvn Build
+#
+FROM maven:3.8.6-eclipse-temurin-17-focal AS build
+COPY src /home/app/src
+COPY pom.xml /home/app
+RUN mvn -f /home/app/pom.xml clean package
 
-
-# TODO: Replace <PROJECT_NAME> below with your project’s name
-#       (See Project Explorer in Eclipse)
-
-
-## Based on https://community.render.com/t/3232
-
-# Build stage
-# FROM maven:3.8.6-eclipse-temurin-17-focal AS build
-# COPY src /home/app/src/hh.bookstore.sof23
-# COPY pom.xml /home/app
-# RUN mvn -f /home/app/pom.xml clean package
-
-# Package stage
-# FROM eclipse-temurin:17-jre-focal
-# COPY --from=build /home/app/target/<hh.bookstore.sof23>-0.0.1-SNAPSHOT.jar /usr/local/lib/hh.bookstore.sof23.jar
-# EXPOSE 8080
-# ENTRYPOINT ["java", "-jar", "/usr/local/lib/hh.bookstore.sof23.jar"]
-
-FROM eclipse-temurin:17-jdk-alpine
-VOLUME /tmp
-COPY target/*.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+#
+# Jar Package
+#
+FROM eclipse-temurin:17-jre-focal
+# StudentListSecureDB-0.0.1-SNAPSHOT.jar  = <artifactId>-<version>.jar (pom.xml)
+COPY --from=build /home/app/target/hh.bookstore.sof23-0.0.1-SNAPSHOT.jar /usr/local/lib/studentlistsecuredb.jar
 EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "/usr/local/lib/hh.bookstore.sof23.jar"]
